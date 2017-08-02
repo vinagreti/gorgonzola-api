@@ -27,4 +27,4 @@ class Article(models.Model):
     category = models.ForeignKey(Category, verbose_name='Category', blank=True, on_delete=models.PROTECT)
     title = models.CharField(max_length=120)
     content = models.TextField()
-    thumb = models.CharField(max_length=1024)
+    thumb = models.ImageField(upload_to = 'pic_folder/', default = 'pic_folder/None/no-img.jpg')
