@@ -12,10 +12,15 @@ def GetImageLink(path, absolute_url):
         url_host, path)
 
 class AuthorSerializer(serializers.ModelSerializer):
+    avatar = serializers.SerializerMethodField()
 
     class Meta:
         model = Author
         fields = ['id', 'name', 'avatar']
+
+    def get_avatar(self, instance):
+        request = self.context.get('request')
+        return  GetImageLink(instance.avatar.url, request.build_absolute_uri())
 
 
 class CategorySerializer(serializers.ModelSerializer):
