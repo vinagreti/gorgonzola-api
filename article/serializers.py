@@ -4,12 +4,8 @@ from article.models import *
 
 pic_folder = "pic_folder"
 
-def GetImageLink(path, absolute_url):
-    port_position = absolute_url.index('8000')
-    api_host_end_at = absolute_url.index('api/v1')
-    url_host = absolute_url[0:api_host_end_at]
-    return "{0}{1}".format(
-        url_host, path)
+def GetImageLink(path):
+    return path
 
 class AuthorSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
@@ -20,7 +16,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     def get_avatar(self, instance):
         request = self.context.get('request')
-        return  GetImageLink(instance.avatar.url, request.build_absolute_uri())
+        return  GetImageLink(instance.avatar.url)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -44,7 +40,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def get_thumb(self, instance):
         request = self.context.get('request')
-        return  GetImageLink(instance.thumb.url, request.build_absolute_uri())
+        return  GetImageLink(instance.thumb.url)
 
     class Meta:
         model = Article
