@@ -20,11 +20,9 @@ class Pagination2000(PageNumberPagination):
 
 def GetArticlesByCategory(request, category):
     categories = Category.objects.filter(name=category)
-    if categories:
-        articles = Article.objects.all()
-        articles = articles.filter(category__in=categories)[0:PAGE_SIZE]
     
-    if articles:
+    if categories:
+        articles = Article.filter(category__in=categories)[0:PAGE_SIZE]
         articles = ArticleSerializer(articles, many=True).data
     else:
         articles = []
