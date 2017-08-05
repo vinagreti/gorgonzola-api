@@ -23,7 +23,9 @@ def GetArticlesByCategory(request, category):
     
     if categories:
         articles = Article.objects.filter(category__in=categories)[0:PAGE_SIZE]
-        articles = ArticleSerializer(articles, many=True).data
+        serializer = ArticleSerializer(articles, many=True)
+        serializer.context['request'] = request
+        articles = serializer.data
     else:
         articles = []
 
