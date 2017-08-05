@@ -22,7 +22,7 @@ def GetArticlesByCategory(request, category):
     categories = Category.objects.filter(name=category)
     
     if categories:
-        articles = Article.filter(category__in=categories)[0:PAGE_SIZE]
+        articles = Article.objects.filter(category__in=categories)[0:PAGE_SIZE]
         articles = ArticleSerializer(articles, many=True).data
     else:
         articles = []
